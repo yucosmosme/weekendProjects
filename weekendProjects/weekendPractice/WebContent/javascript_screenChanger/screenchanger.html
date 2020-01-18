@@ -19,12 +19,54 @@
 	<!-- nightDayHandler함수 실행시키는데 this라는 매개벼수 전달(this는 속한 input tag<>를 가리킴) -->
 	
 
+<!-- Ajax -->
+<!-- 웹브라우저에서 가져와서 동적으로 바꾸기 -->
+<!-- 웹페이지에서 일부 정보가 달라졌음에도 전체 페이지를 리로드하는 것은 효율적이지 않습니다. Ajax는 리로드 없이 웹서버에게 정보를 요청해서 부분적으로 정보를 갱신해주는 기술입니다.  -->
+<ol id ="nav"></ol>
 
-<ol>
-<li><a href="https://www.naver.com">Naver</a></li>
-<li><a href="https://www.google.com">Google</a></li>
-<li><a href="https://www.daum.net">Daum</a></li>
-</ol>
+<!-- 여기에 Ajax에서 받아온 내용 넣기 -->
+<article></article>
 
+<script>
+
+// Ajax에서 내용 받아와서 <article>태그에 내용 넣기
+//중복코드재활용 - name에 파일명 받기
+function fetchPage(name){
+	fetch(name).then(function(response){
+	response.text().then(function(text){
+		document.querySelector('article').innerHTML = text;})})}
+		
+//해시벵에 표시된 내용으로 웹페이지 이동시키기
+// #! hashbang: 페이지 리로드없이 할수있게 해줌. 검섹엔진 최적화가 잘 안됨 -> 최근에는 pjex사용
+if(location.hash){ //웹페이지 주소에 표시된 글자가 있으면
+	fetchPage(location.hash.substr(2)); // 앞에 두글자(!# 해쉬뱅) 제거 하고 해당 페이지로 이동
+}else{ // 해시뱅이 없으면 웰컴페이지로 이동
+	fetchPage('welcome.html');
+}
+
+//list.html 불러와서 거기에 있는 내용을 .split해서 배열로 만든뒤 차례로 <ol>리스트에 가져오기
+//<ol>리스트태그에 보여주기(Ajax기능. 웹페이지를 리로드하지 않고 데이터 가져옴)
+fetch('list.html').then(function(response){ //list.html가져온 후에 아래와 같이 응답 
+	response.text().then(function(text){ //list.html에 있는 text 내용을 응답한 뒤에 그 text로
+		console.log(text);//콘솔에 띄우기
+		var items = text.split(','); //text쪼개서 배열로만들기
+		var i = 0;
+		var tags = '';
+		while(i<items.length){
+			var item = items[i];
+			console.log(item);
+			
+			//이름뒤에 파일형태 .html 제거
+			var shortenedItem = item.substr(0, item.lastIndexOf("."));
+			console.log(shortenedItem);
+			
+			var tag = '<li><a href="#!'+item+'" onclick="fetchPage(\''+item+'\')">'+shortenedItem+'</a></li>';
+			tags = tags + tag;
+			i = i + 1;
+		}
+	console.log(items);
+	console.log(tags);
+	document.querySelector('#nav').innerHTML = tags;})})
+</script>
 </body>
 </html>
