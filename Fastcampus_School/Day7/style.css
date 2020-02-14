@@ -1,0 +1,12 @@
+section {
+  border: 1px solid black;
+  border-radius: 5px;
+  padding-left: 10px;
+  margin-bottom: 10px;
+}
+
+section:nth-child(n+2) {
+  background-color:lightyellow;
+  color:green;
+  font-size: 19px
+}

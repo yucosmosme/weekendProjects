@@ -1,0 +1,49 @@
+.container{
+  background-color:#20232a;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+a:hover {
+  color: #61DAFB;
+}
+
+h1 {
+  display: inline;
+}
+
+
+.logo{
+  color: #61dafb;
+}
+
+/*
+.nav-list-item{
+   list-style:none;
+  color:white;
+  transition:color 0.2s
+}
+*/
+
+.nav {
+  display: inline-block;
+  margin-right: 80px;
+}
+
+.nav-list {
+  font-size: 0;
+}
+
+.nav-list-item {
+  display: inline-block;
+}
+
+.nav-list-item a {
+  padding: 0 20px;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 300;
+}
